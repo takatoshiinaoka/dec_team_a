@@ -127,3 +127,4 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+app/202106-043398656781-043398656781.parquet

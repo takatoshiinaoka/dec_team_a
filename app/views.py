@@ -17,24 +17,9 @@ def index(request):
     "data":"これはデータ変数です"
     })
 
-#png画像形式に変換数関数
-def plt2png():
-    buf = io.BytesIO()
-    plt.savefig(buf, format='png', dpi=200)
-    s = buf.getvalue()
-    buf.close()
-    return s
+
 
 def view_plot1(request):
-    # matplotを使って作図する
-
-    # x = [1, 5, 9]
-    # y = [4, 6, 8]
-    # ax = plt.subplot()
-    # ax.scatter(x, y)
-    # png = plt2png()
-    # plt.cla()
-
     df1 = pd.read_parquet("/Users/takatoshiinaoka/Desktop/django/dec_team_a/app/201807-043398656781-043398656781.parquet")
     pd.set_option('display.max_rows', None)
     pd.set_option('display.max_columns', None)
@@ -42,17 +27,38 @@ def view_plot1(request):
     ret=df1["product_code"].value_counts()
     print(ret)
     ret.plot.bar()
+    #png画像形式に変換数関数
+    def plt2png():
+        buf = io.BytesIO()
+        plt.savefig(buf, format='png', dpi=300)
+        s = buf.getvalue()
+        buf.close()
+        return s
     png = plt2png()
     plt.cla()
 
     response = HttpResponse(png, content_type='image/png')
     return response
 
-    
+def view_plot2(request):
+    df1 = pd.read_parquet("/Users/takatoshiinaoka/Desktop/django/dec_team_a/app/202106-043398656781-043398656781.parquet")
+    pd.set_option('display.max_rows', None)
+    pd.set_option('display.max_columns', None)
+    #print(df1)
+    ret=df1["product_code"].value_counts()
+    print(ret)
+    ret.plot.bar()
+    def plt2png():
+        buf = io.BytesIO()
+        plt.savefig(buf, format='png', dpi=300)
+        s = buf.getvalue()
+        buf.close()
+        return s
+    png = plt2png()
+    plt.cla()
 
-    # response = HttpResponse(content_type="image/png")
-    # Image.save(response, "PNG")
-    # return response
+    response = HttpResponse(png, content_type='image/png')
+    return response
 
 
 def graph(request):
